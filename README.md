@@ -202,71 +202,135 @@ The auto-generated API documentation is provided by [lout] and it's based on the
   curl localhost:3000/todo-lists/1
   ```
 
-5. Export `create()`, `update()` and `remove()` end-points in `src/routes/todo_lists.routes.js`
+5. Extend the controller class with `create()` and `update`: _ToDoListsController_ `src/controllers/todo_lists.controller.js`
   ```js
   /**
    * Create a new ToDo list
-   *
-   * @return {object}
    */
-  create() {
-    // Get route settings from parent
-    let route = super.create()
+  create(request, reply) {
+    let data = request.payload
 
-    // Update end-point description (used in Documentation)
-    route.config.description = 'Create a new ToDo list'
-
-    // Add validations for POST payload
-    route.config.validate.payload = {
-      name: this.joi.string().required().description('ToDo list name')
-    }
-
-    return route
+    this.ToDoList.save(data)
+      .then(reply)
+      .catch((err) => reply(this.Boom.wrap(err)))
   }
 
   /**
    * Update an existing ToDo list
-   *
-   * @return {object}
    */
-  update() {
-    // Get route settings from parent
-    let route = super.update()
+  update(request, reply) {
+    let id = request.params.id
+      , data = request.payload
 
-    // Update end-point description (used in Documentation)
-    route.config.description = 'Update an existing ToDo list'
+    this.ToDoList.update(id, data)
+      .then((response) => this.replyOnResonse(response, reply))
+      .catch((err) => reply(this.Boom.wrap(err)))
+  }
+  ```
 
-    // Add validations for POST payload
-    route.config.validate.payload = {
-      name: this.joi.string().description('ToDo list name')
+  6. Extend ToDo List routes class with `create()` and `update()`: `src/routes/todo_lists.routes.js`
+    ```js
+    /**
+     * Create a new ToDo list
+     *
+     * @return {object}
+     */
+    create() {
+      // Get route settings from parent
+      let route = super.create()
+
+      // Update end-point description (used in Documentation)
+      route.config.description = 'Create a new ToDo list'
+
+      // Add validations for POST payload
+      route.config.validate.payload = {
+        name: this.joi.string().required().description('ToDo list name')
+      }
+
+      return route
     }
 
-    return route
-  }
+    /**
+     * Update an existing ToDo list
+     *
+     * @return {object}
+     */
+    update() {
+      // Get route settings from parent
+      let route = super.update()
 
-  // ...
+      // Update end-point description (used in Documentation)
+      route.config.description = 'Update an existing ToDo list'
 
+      // Add validations for POST payload
+      route.config.validate.payload = {
+        name: this.joi.string().description('ToDo list name')
+      }
+
+      return route
+    }
+    ```
+
+7. Export `create()` and `update()` end-points in `src/routes/todo_lists.routes.js`
+  ```js
   //
   // Export public end-points
   //
   export default [
     routes.index(),
     routes.view(),
-    routes.viewAll(),
+    routes.create(),
+    routes.update()
+  ]
+  ```
+
+8. Lets test it:
+  ```bash
+  curl localhost:3000/todo-lists
+
+  curl -X PUT localhost:3000/todo-lists/1 -d name=Homework
+
+  curl -X POST localhost:3000/todo-lists -d name=Uni\ Stuff  
+  ```
+
+9. Extend the controller class with `remove()`: _ToDoListsController_ `src/controllers/todo_lists.controller.js`
+  ```js
+  /**
+   * Delete a ToDo list
+   */
+  remove(request, reply) {
+    let id = request.params.id
+
+    this.ToDoList.del(id)
+      .then((response) => this.replyOnResonse(response, reply))
+      .catch((err) => reply(this.Boom.wrap(err)))
+  }
+  ```
+
+10. Export the `remove()` end-points in `src/routes/todo_lists.routes.js`
+  ```js
+  //
+  // Export public end-points
+  //
+  export default [
+    routes.index(),
+    routes.view(),
     routes.create(),
     routes.update(),
     routes.remove()
   ]
   ```
 
-6. Lets test it:
+11. Lets test it:
   ```bash
-  curl -X POST localhost:3000/todo-lists/1 -d name=Uni\ Stuff
-
-  curl -X PUT localhost:3000/todo-lists/1 -d name=Homework
+  curl localhost:3000/todo-lists
 
   curl -X DELETE localhost:3000/todo-lists/1
   ```
+
+12. Activate tests for ToDo Lists (`*.spec.js` files)
+
+13. Find out how to continue with ToDo's ;)
 
 ---
 
