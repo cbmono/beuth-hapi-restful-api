@@ -150,7 +150,7 @@ http://localhost:3000/docs
   ```
 
 2. Extend the controller class: _ToDoListsController_ `src/controllers/todo_lists.controller.js`
-  ```
+  ```js
   /**
    * Constructor
    */
@@ -183,7 +183,7 @@ http://localhost:3000/docs
   ```
 
 3. Export `index()` and `view()` end-points in `src/routes/todo_lists.routes.js`
-  ```
+  ```js
   //
   // Export public end-points
   //
@@ -192,6 +192,13 @@ http://localhost:3000/docs
     routes.view()
   ]
   ```
+
+4. Test...
+```
+curl localhost:3000/todo-lists
+
+curl localhost:3000/todo-lists/1
+```
 
 ---
 
