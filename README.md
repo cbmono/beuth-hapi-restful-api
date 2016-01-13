@@ -136,7 +136,23 @@ http://localhost:3000/docs
 
 ## Build ToDo API
 
-1. Create the routes for ToDo Lists: `todo_lists.routes.js`
+1. Extend the ToDo List model class: `src/models/ToDoList.js`
+  ```
+  /**
+   * Constructor
+   */
+  constructor() {
+    let tableName = 'todo_lists'
+    super(tableName)
+  }
+  ```
+
+2. Add the controller for ToDo Lists: `src/controllers/todo_lists.controller.js`
+  ```
+
+  ```
+
+1. Create the routes for ToDo Lists: `src/routes/todo_lists.routes.js`
   ```
   //
   // Internal dependencies
@@ -167,13 +183,56 @@ http://localhost:3000/docs
   export default [
     routes.index(),
     routes.view(),
-    routes.viewAll(),
     routes.create(),
     routes.update(),
     routes.remove()
   ]
   ```
 
+
+
+2. Add `create()` nad `update()` end-points
+  ```
+  /**
+   * Create a new ToDo list
+   *
+   * @return {object}
+   */
+  create() {
+    // Get route settings from parent
+    let route = super.create()
+
+    // Update end-point description (used in Documentation)
+    route.config.description = 'Create a new ToDo list'
+
+    // Add validations for POST payload
+    route.config.validate.payload = {
+      name: this.joi.string().required().description('ToDo list name')
+    }
+
+    return route
+  }
+
+  /**
+   * Update an existing ToDo list
+   *
+   * @return {object}
+   */
+  update() {
+    // Get route settings from parent
+    let route = super.update()
+
+    // Update end-point description (used in Documentation)
+    route.config.description = 'Update an existing ToDo list'
+
+    // Add validations for POST payload
+    route.config.validate.payload = {
+      name: this.joi.string().description('ToDo list name')
+    }
+
+    return route
+  }
+  ```
 
 ## More
 

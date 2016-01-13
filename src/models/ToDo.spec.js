@@ -11,7 +11,7 @@ import { ToDo } from './ToDo'
 //
 // Tests
 //
-describe('Model: ToDo', () => {
+xdescribe('Model: ToDo', () => {
   let model
 
   beforeEach(() => {

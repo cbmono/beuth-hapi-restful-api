@@ -12,7 +12,7 @@ const config = require('config')
 //
 // Tests
 //
-describe(`API Test: ToDo's`, () => {
+xdescribe(`API Test: ToDo's`, () => {
   /**
    * NOTE: follow this order of API Tests
    *

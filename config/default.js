@@ -49,7 +49,7 @@ module.exports = {
   //
   database: {
     connection: {
-      database: 'my-database-name'    // @changeme
+      database: 'todo'    // @changeme
     }
   },
 
