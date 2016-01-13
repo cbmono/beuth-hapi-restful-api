@@ -179,7 +179,7 @@ The auto-generated API documentation is provided by [lout] and it's based on the
     let id = request.params.id
 
     this.ToDoList.findById(id)
-      .then((response) => this.replyOnResonse(response, reply))
+      .then((response) => this.replyOnResponse(response, reply))
       .catch((err) => reply(this.Boom.wrap(err)))
   }
   ```
@@ -223,7 +223,7 @@ The auto-generated API documentation is provided by [lout] and it's based on the
       , data = request.payload
 
     this.ToDoList.update(id, data)
-      .then((response) => this.replyOnResonse(response, reply))
+      .then((response) => this.replyOnResponse(response, reply))
       .catch((err) => reply(this.Boom.wrap(err)))
   }
   ```
@@ -302,7 +302,7 @@ The auto-generated API documentation is provided by [lout] and it's based on the
     let id = request.params.id
 
     this.ToDoList.del(id)
-      .then((response) => this.replyOnResonse(response, reply))
+      .then((response) => this.replyOnResponse(response, reply))
       .catch((err) => reply(this.Boom.wrap(err)))
   }
   ```

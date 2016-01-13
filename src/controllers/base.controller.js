@@ -35,7 +35,7 @@ const Boom = require('boom')
    * @param  {function} reply
    *         Hapi default callback
    */
-  replyOnResonse(response, reply) {
+  replyOnResponse(response, reply) {
     if ((Array.isArray(response) && response.length) || response > 0) {
       reply(response)
     }

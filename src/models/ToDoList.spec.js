@@ -18,7 +18,6 @@ xdescribe('Model: ToDoList', () => {
     model = new ToDoList()
 
     spyOn(model, 'findById').and.returnValue(Q.when([{}]))
-    spyOn(model.ToDo, 'findBy').and.returnValue(Q.when({}))
   })
 
   it('should be defined and inherit from BaseModelRDMS', () => {
