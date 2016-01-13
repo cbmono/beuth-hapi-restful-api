@@ -228,48 +228,48 @@ The auto-generated API documentation is provided by [lout] and it's based on the
   }
   ```
 
-  6. Extend ToDo List routes class with `create()` and `update()`: `src/routes/todo_lists.routes.js`
-    ```js
-    /**
-     * Create a new ToDo list
-     *
-     * @return {object}
-     */
-    create() {
-      // Get route settings from parent
-      let route = super.create()
+6. Extend ToDo List routes class with `create()` and `update()`: `src/routes/todo_lists.routes.js`
+  ```js
+  /**
+   * Create a new ToDo list
+   *
+   * @return {object}
+   */
+  create() {
+    // Get route settings from parent
+    let route = super.create()
 
-      // Update end-point description (used in Documentation)
-      route.config.description = 'Create a new ToDo list'
+    // Update end-point description (used in Documentation)
+    route.config.description = 'Create a new ToDo list'
 
-      // Add validations for POST payload
-      route.config.validate.payload = {
-        name: this.joi.string().required().description('ToDo list name')
-      }
-
-      return route
+    // Add validations for POST payload
+    route.config.validate.payload = {
+      name: this.joi.string().required().description('ToDo list name')
     }
 
-    /**
-     * Update an existing ToDo list
-     *
-     * @return {object}
-     */
-    update() {
-      // Get route settings from parent
-      let route = super.update()
+    return route
+  }
 
-      // Update end-point description (used in Documentation)
-      route.config.description = 'Update an existing ToDo list'
+  /**
+   * Update an existing ToDo list
+   *
+   * @return {object}
+   */
+  update() {
+    // Get route settings from parent
+    let route = super.update()
 
-      // Add validations for POST payload
-      route.config.validate.payload = {
-        name: this.joi.string().description('ToDo list name')
-      }
+    // Update end-point description (used in Documentation)
+    route.config.description = 'Update an existing ToDo list'
 
-      return route
+    // Add validations for POST payload
+    route.config.validate.payload = {
+      name: this.joi.string().description('ToDo list name')
     }
-    ```
+
+    return route
+  }
+  ```
 
 7. Export `create()` and `update()` end-points in `src/routes/todo_lists.routes.js`
   ```js
