@@ -222,6 +222,20 @@ export NODE_ENV=staging
 forever start index.js
 ```
 
+
+
+
+
+
+
+
+
+  
+### TL;DR
+https://github.com/cbmono/hapijs-seed-mvc
+
+
+
 [hapi]:     http://hapijs.com/
 [knex.js]:  http://knexjs.org/
 [lout]:     https://github.com/hapijs/lout
