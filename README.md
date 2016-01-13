@@ -196,11 +196,77 @@ The auto-generated API documentation is provided by [lout] and it's based on the
   ```
 
 4. Lets test it:
-```bash
-curl localhost:3000/todo-lists
+  ```bash
+  curl localhost:3000/todo-lists
 
-curl localhost:3000/todo-lists/1
-```
+  curl localhost:3000/todo-lists/1
+  ```
+
+5. Export `create()`, `update()` and `remove()` end-points in `src/routes/todo_lists.routes.js`
+  ```js
+  /**
+   * Create a new ToDo list
+   *
+   * @return {object}
+   */
+  create() {
+    // Get route settings from parent
+    let route = super.create()
+
+    // Update end-point description (used in Documentation)
+    route.config.description = 'Create a new ToDo list'
+
+    // Add validations for POST payload
+    route.config.validate.payload = {
+      name: this.joi.string().required().description('ToDo list name')
+    }
+
+    return route
+  }
+
+  /**
+   * Update an existing ToDo list
+   *
+   * @return {object}
+   */
+  update() {
+    // Get route settings from parent
+    let route = super.update()
+
+    // Update end-point description (used in Documentation)
+    route.config.description = 'Update an existing ToDo list'
+
+    // Add validations for POST payload
+    route.config.validate.payload = {
+      name: this.joi.string().description('ToDo list name')
+    }
+
+    return route
+  }
+
+  // ...
+
+  //
+  // Export public end-points
+  //
+  export default [
+    routes.index(),
+    routes.view(),
+    routes.viewAll(),
+    routes.create(),
+    routes.update(),
+    routes.remove()
+  ]
+  ```
+
+6. Lets test it:
+  ```bash
+  curl -X POST localhost:3000/todo-lists/1 -d name=Uni\ Stuff
+
+  curl -X PUT localhost:3000/todo-lists/1 -d name=Homework
+
+  curl -X DELETE localhost:3000/todo-lists/1
+  ```
 
 ---
 
