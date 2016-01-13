@@ -134,10 +134,12 @@ The auto-generated API documentation is provided by [lout] and it's based on the
 
 http://localhost:3000/docs
 
-## Build ToDo API
+---
 
-1. Extend the ToDo List model class: `src/models/ToDoList.js`
-  ```
+# Build ToDo API
+
+1. Extend the model class: _ToDoList_ (`src/models/ToDoList.js`)
+  ```js
   /**
    * Constructor
    */
@@ -147,92 +149,51 @@ http://localhost:3000/docs
   }
   ```
 
-2. Add the controller for ToDo Lists: `src/controllers/todo_lists.controller.js`
+2. Extend the controller class: _ToDoListsController_ `src/controllers/todo_lists.controller.js`
   ```
+  /**
+   * Constructor
+   */
+  constructor() {
+    let notFoundMsg = `ToDo List not found`
 
-  ```
-
-1. Create the routes for ToDo Lists: `src/routes/todo_lists.routes.js`
-  ```
-  //
-  // Internal dependencies
-  //
-  import { ToDoListsController } from '../controllers/todo_lists.controller'
-  import { BaseRoutes } from './base.routes'
-
-  /******************************************
-   *
-   * Lists routes
-   *
-   ******************************************/
-  let routes = new class TodoListsRoutes extends BaseRoutes {
-
-    /**
-     * Constructor
-     */
-    constructor() {
-      let endpointName = '/todo-lists'
-      super(new ToDoListsController(), endpointName)
-    }
+    super(notFoundMsg)
+    this.ToDoList = new ToDoList()
   }
 
+  /**
+   * Retrieve the list of all ToDo lists
+   */
+  index(request, reply) {
+    this.ToDoList.findAll()
+      .then(reply)
+      .catch((err) => reply(this.Boom.wrap(err)))
+  }
 
+  /**
+   * Retrieve a single ToDo list
+   */
+  view(request, reply) {
+    let id = request.params.id
+
+    this.ToDoList.findById(id)
+      .then((response) => this.replyOnResonse(response, reply))
+      .catch((err) => reply(this.Boom.wrap(err)))
+  }
+  ```
+
+3. Export `index()` and `view()` end-points in `src/routes/todo_lists.routes.js`
+  ```
   //
   // Export public end-points
   //
   export default [
     routes.index(),
-    routes.view(),
-    routes.create(),
-    routes.update(),
-    routes.remove()
+    routes.view()
   ]
   ```
 
-
-
-2. Add `create()` nad `update()` end-points
-  ```
-  /**
-   * Create a new ToDo list
-   *
-   * @return {object}
-   */
-  create() {
-    // Get route settings from parent
-    let route = super.create()
-
-    // Update end-point description (used in Documentation)
-    route.config.description = 'Create a new ToDo list'
-
-    // Add validations for POST payload
-    route.config.validate.payload = {
-      name: this.joi.string().required().description('ToDo list name')
-    }
-
-    return route
-  }
-
-  /**
-   * Update an existing ToDo list
-   *
-   * @return {object}
-   */
-  update() {
-    // Get route settings from parent
-    let route = super.update()
-
-    // Update end-point description (used in Documentation)
-    route.config.description = 'Update an existing ToDo list'
-
-    // Add validations for POST payload
-    route.config.validate.payload = {
-      name: this.joi.string().description('ToDo list name')
-    }
-
-    return route
-  }
-  ```
+---
 
 ## More
 
