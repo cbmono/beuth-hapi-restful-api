@@ -202,7 +202,7 @@ The auto-generated API documentation is provided by [lout] and it's based on the
   curl localhost:3000/todo-lists/1
   ```
 
-5. Extend the controller class with `create()` and `update`: _ToDoListsController_ `src/controllers/todo_lists.controller.js`
+5. Extend the controller class with `create()`, `update()` and `remove()`: _ToDoListsController_ `src/controllers/todo_lists.controller.js`
   ```js
   /**
    * Create a new ToDo list
@@ -223,6 +223,17 @@ The auto-generated API documentation is provided by [lout] and it's based on the
       , data = request.payload
 
     this.ToDoList.update(id, data)
+      .then((response) => this.replyOnResponse(response, reply))
+      .catch((err) => reply(this.Boom.wrap(err)))
+  }
+
+  /**
+   * Delete a ToDo list
+   */
+  remove(request, reply) {
+    let id = request.params.id
+
+    this.ToDoList.del(id)
       .then((response) => this.replyOnResponse(response, reply))
       .catch((err) => reply(this.Boom.wrap(err)))
   }
@@ -271,43 +282,7 @@ The auto-generated API documentation is provided by [lout] and it's based on the
   }
   ```
 
-7. Export `create()` and `update()` end-points in `src/routes/todo_lists.routes.js`
-  ```js
-  //
-  // Export public end-points
-  //
-  export default [
-    routes.index(),
-    routes.view(),
-    routes.create(),
-    routes.update()
-  ]
-  ```
-
-8. Lets test it:
-  ```bash
-  curl localhost:3000/todo-lists
-
-  curl -X PUT localhost:3000/todo-lists/1 -d name=Homework
-
-  curl -X POST localhost:3000/todo-lists -d name=Uni\ Stuff  
-  ```
-
-9. Extend the controller class with `remove()`: _ToDoListsController_ `src/controllers/todo_lists.controller.js`
-  ```js
-  /**
-   * Delete a ToDo list
-   */
-  remove(request, reply) {
-    let id = request.params.id
-
-    this.ToDoList.del(id)
-      .then((response) => this.replyOnResponse(response, reply))
-      .catch((err) => reply(this.Boom.wrap(err)))
-  }
-  ```
-
-10. Export the `remove()` end-points in `src/routes/todo_lists.routes.js`
+7. Export `create()`, `update()` and `remove()` end-points in `src/routes/todo_lists.routes.js`
   ```js
   //
   // Export public end-points
@@ -321,16 +296,20 @@ The auto-generated API documentation is provided by [lout] and it's based on the
   ]
   ```
 
-11. Lets test it:
+8. Lets test it:
   ```bash
   curl localhost:3000/todo-lists
+
+  curl -X PUT localhost:3000/todo-lists/1 -d name=Homework
+
+  curl -X POST localhost:3000/todo-lists -d name=Uni\ Stuff  
 
   curl -X DELETE localhost:3000/todo-lists/1
   ```
 
-12. Activate tests for ToDo Lists (`*.spec.js` files)
+9. Activate tests for ToDo Lists (`*.spec.js` files)
 
-13. Find out how to continue with ToDo's ;)
+10. Find out how to continue with ToDo's ;)
 
 ---
 
