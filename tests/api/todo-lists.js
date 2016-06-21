@@ -167,7 +167,7 @@ xdescribe(`API Test: ToDo Lists`, () => {
     })
   })
 
-  describe('GET /todo-lists/{id}/todos', () => {
+  xdescribe('GET /todo-lists/{id}/todos', () => {
     it(`should retrieve one ToDo List and all its ToDo's`, (done) => {
       rp({
         method: 'GET',

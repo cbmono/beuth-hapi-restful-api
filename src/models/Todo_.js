@@ -6,4 +6,11 @@ import { BaseModelRDMS } from './BaseModel.RDMS'
 //
 export class ToDo extends BaseModelRDMS {
 
+  /**
+   * Constructor
+   */
+  constructor() {
+    let tableName = 'todos'
+    super(tableName)
+  }
 }
