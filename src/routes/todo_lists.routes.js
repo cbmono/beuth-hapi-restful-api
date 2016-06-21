@@ -1,14 +1,9 @@
-//
-// Internal dependencies
-//
 import { ToDoListsController } from '../controllers/todo_lists.controller'
 import { BaseRoutes } from './base.routes'
 
-/******************************************
- *
- * Lists routes
- *
- ******************************************/
+//
+// ToDo Lists routes
+//
 let routes = new class TodoListsRoutes extends BaseRoutes {
 
   /**
@@ -19,7 +14,6 @@ let routes = new class TodoListsRoutes extends BaseRoutes {
     super(new ToDoListsController(), endpointName)
   }
 }
-
 
 //
 // Export public end-points

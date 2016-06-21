@@ -1,22 +1,18 @@
-//
-// External dependencies
-//
-const _ = require('lodash')
+import config  from 'config'
+import _  from 'lodash'
+import { default as log } from '../../src/logger'
+
 const rp = require('request-promise')
 
-//
-// Internal dependencies
-//
-const config = require('config')
 
 //
 // Tests
 //
 xdescribe(`API Test: ToDo's`, () => {
   /**
-   * NOTE: follow this order of API Tests
+   * NOTE: follow this order for API Tests
    *
-   * CREATE -> UPDATE -> VIEW (ALL) -> DELETE -> Done!
+   * CREATE -> UPDATE -> VIEW -> VIEW ALL -> DELETE -> Done!
    */
 
   let todoListId
@@ -44,7 +40,7 @@ xdescribe(`API Test: ToDo's`, () => {
         done()
       })
       .catch((err) => {
-        console.error(err)
+        log.error(err)
         fail()
       })
     })
@@ -74,7 +70,7 @@ xdescribe(`API Test: ToDo's`, () => {
           done()
         },
         (err) => {
-          console.error(err)
+          log.error(err)
           fail()
         }
       )
@@ -117,7 +113,7 @@ xdescribe(`API Test: ToDo's`, () => {
           done()
         },
         (err) => {
-          console.error(err)
+          log.error(err)
           fail()
         }
       )
@@ -174,7 +170,7 @@ xdescribe(`API Test: ToDo's`, () => {
           done()
         },
         (err) => {
-          console.error(err)
+          log.error(err)
           fail()
         }
       )
@@ -205,7 +201,7 @@ xdescribe(`API Test: ToDo's`, () => {
       .then(
         (response) => {
           let body = JSON.parse(response.body)
-          let createdEntry = _.findWhere(body, { id: createdId })
+          let createdEntry = _.find(body, { id: createdId })
 
           expect(response.statusCode).toBe(200)
           expect(body.length).toBeGreaterThan(0)
@@ -217,7 +213,7 @@ xdescribe(`API Test: ToDo's`, () => {
           done()
         },
         (err) => {
-          console.error(err)
+          log.error(err)
           fail()
         }
       )
@@ -241,7 +237,7 @@ xdescribe(`API Test: ToDo's`, () => {
           done()
         },
         (err) => {
-          console.error(err)
+          log.error(err)
           fail()
         }
       )

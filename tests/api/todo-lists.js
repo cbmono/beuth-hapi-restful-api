@@ -1,22 +1,18 @@
-//
-// External dependencies
-//
-const _ = require('lodash')
+import config  from 'config'
+import _  from 'lodash'
+import { default as log } from '../../src/logger'
+
 const rp = require('request-promise')
 
-//
-// Internal dependencies
-//
-const config = require('config')
 
 //
 // Tests
 //
 xdescribe(`API Test: ToDo Lists`, () => {
   /**
-   * NOTE: follow this order of API Tests
+   * NOTE: follow this order for API Tests
    *
-   * CREATE -> UPDATE -> VIEW (ALL) -> DELETE -> Done!
+   * CREATE -> UPDATE -> VIEW -> VIEW ALL -> DELETE -> Done!
    */
 
   // Keep track of the created ID
@@ -171,6 +167,46 @@ xdescribe(`API Test: ToDo Lists`, () => {
     })
   })
 
+  describe('GET /todo-lists/{id}/todos', () => {
+    it(`should retrieve one ToDo List and all its ToDo's`, (done) => {
+      rp({
+        method: 'GET',
+        uri: config.apiUrl + '/todo-lists/' + createdId + '/todos',
+        resolveWithFullResponse: true
+      })
+      .then(
+        (response) => {
+          let body = JSON.parse(response.body)
+
+          expect(response.statusCode).toBe(200)
+          expect(body.length).toBe(1)
+          expect(body[0].id).toBe(createdId)
+          expect(_.isArray(body[0].todos)).toBe(true)
+
+          done()
+        },
+        (err) => {
+          console.error(err)
+          fail()
+        }
+      )
+    })
+
+    it(`should return status code 404`, (done) => {
+      rp({
+        method: 'GET',
+        uri: config.apiUrl + '/todo-lists/-1/todos'
+      })
+      .then(
+        (response) => fail,
+        (err) => {
+          expect(err.statusCode).toBe(404)
+          done()
+        }
+      )
+    })
+  })
+
   describe('GET /todo-lists', () => {
     it(`should retrieve all ToDo Lists`, (done) => {
       rp({
@@ -181,7 +217,7 @@ xdescribe(`API Test: ToDo Lists`, () => {
       .then(
         (response) => {
           let body = JSON.parse(response.body)
-          let createdEntry = _.findWhere(body, { id: createdId })
+          let createdEntry = _.find(body, { id: createdId })
 
           expect(response.statusCode).toBe(200)
           expect(body.length).toBeGreaterThan(0)

@@ -1,7 +1,4 @@
-//
-// External dependencies
-//
-const Boom = require('boom')
+import Boom  from 'boom'
 
 
 /******************************************

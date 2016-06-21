@@ -1,15 +1,10 @@
-//
-// Internal dependencies
-//
 import { MainController } from '../controllers/main.controller'
 import { BaseRoutes } from './base.routes'
 
 
-/******************************************
- *
- * Main (global) routes
- *
- ******************************************/
+//
+// Main (global) routes
+//
 let routes = new class MainRoutes extends BaseRoutes {
 
   /**
@@ -28,8 +23,8 @@ let routes = new class MainRoutes extends BaseRoutes {
     return {
       method: 'GET',
       path: '/healthcheck',
+      handler: this.controller.healthcheck.bind(this.controller),
       config: {
-        handler: this.controller.healthcheck.bind(this.controller),
         description: 'Display the status of the App and DB connection',
         tags: [ 'public' ]
       }
@@ -45,19 +40,16 @@ let routes = new class MainRoutes extends BaseRoutes {
     return {
       method: 'GET',
       path: '/{param*}',
+      handler: {
+        directory: { path: './public' }
+      },
       config: {
-        handler: {
-          directory: { path: './public' }
-        },
-        plugins: {
-          lout: false
-        },
+        plugins: { lout: false },
         description: 'Serve static files from ./public'
       }
     }
   }
 }
-
 
 //
 // Export public end-points

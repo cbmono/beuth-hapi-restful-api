@@ -1,12 +1,6 @@
-//
-// External dependencies
-//
-const Q = require('q')
-
-//
-// Internal dependencies
-//
+import * as Q  from 'q'
 import { ToDoListsController } from './todo_lists.controller'
+
 
 //
 // Tests
@@ -19,6 +13,7 @@ xdescribe('Controller: ToDo Lists', () => {
 
     spyOn(controller.ToDoList, 'findAll').and.returnValue(Q.when({}))
     spyOn(controller.ToDoList, 'findById').and.returnValue(Q.when({}))
+    spyOn(controller.ToDoList, 'findByIdWithToDos').and.returnValue(Q.when({}))
     spyOn(controller.ToDoList, 'save').and.returnValue(Q.when({}))
     spyOn(controller.ToDoList, 'update').and.returnValue(Q.when({}))
     spyOn(controller.ToDoList, 'del').and.returnValue(Q.when({}))
@@ -40,6 +35,14 @@ xdescribe('Controller: ToDo Lists', () => {
 
     controller.view(request)
     expect(controller.ToDoList.findById).toHaveBeenCalledWith(id)
+  })
+
+  it('should expose viewAll()', () => {
+    let id = 1
+      , request = { params: { id: id }}
+
+    controller.viewAll(request)
+    expect(controller.ToDoList.findByIdWithToDos).toHaveBeenCalledWith(id)
   })
 
   it('should expose create()', () => {

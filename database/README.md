@@ -4,15 +4,15 @@ Keep your Migrations in this directory. It's recommended to prefix the files wit
 
 ## Migration
 ```
-$ gulp db:migrate
+$ npm run db:migrate
 ```
 
 ## Rollback
 ```
-$ gulp db:rollback
+$ npm run db:rollback
 ```
 
 ## Seed
 ```
-$ gulp db:seed
+$ npm run db:seed
 ```

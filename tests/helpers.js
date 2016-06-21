@@ -1,14 +1,17 @@
-//
-// External dependencies
-//
-const _ = require('lodash')
+import _  from 'lodash'
+import { default as log } from '../src/logger'
+
 
 //
-// Helper methods for tests
+// Helper methods/plugins for tests
 //
+
+// Global dependencies (available across all tests)
+GLOBAL._ = _
+GLOBAL.log = log
 
 /**
- * Helper method for routes
+ * Helper assert method for routes
  *
  * @param  {object} routes
  * @param  {string} expectedPath
@@ -21,11 +24,12 @@ export function assertRoutes( routes,
                               expectedMethod,
                               validateParams = false,
                               validatePayload = false) {
-  let route = _.findWhere(routes, { path: expectedPath, method: expectedMethod })
+
+  let route = _.find(routes, { path: expectedPath, method: expectedMethod })
 
   expect(route.path).toBe(expectedPath)
   expect(route.method).toBe(expectedMethod)
-  expect(typeof route.config.handler).toBe('function')
+  expect(typeof route.handler).toBe('function')
 
   if (validateParams) {
     expect(route.config.validate.params).not.toBe(undefined)

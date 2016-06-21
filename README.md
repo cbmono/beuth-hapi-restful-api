@@ -1,6 +1,7 @@
 # [hapi] Seed Project - MVC / RDMS
 
-This project is an application skeleton for a typical [hapi] RESTful API. You can use it to quickly bootstrap your [hapi] API projects and be ready to code the core of your App within minutes.
+This project is an educational application skeleton for a typical [hapi] RESTful API. 
+You can use it to quickly bootstrap your [hapi] API projects and be ready to start coding the core of your App within minutes.
 
 ## Features
 
@@ -11,7 +12,7 @@ This project is an application skeleton for a typical [hapi] RESTful API. You ca
   - PostgreSQL
   - SQLite3
   - Schema Migrations and Seeding
-- Pre-configured environments (_local_, _dev_, _staging_, _production_)
+- Pre-configured environments (_dev_, _qa_, _staging_, _production_)
 - Powerful payload validations via [joi]
 - Auto-generated documentation ([lout])
 - Unit & API/REST tests examples ([Jasmine2])
@@ -52,20 +53,19 @@ This project is an application skeleton for a typical [hapi] RESTful API. You ca
   CREATE DATABASE todo;
   ```
 
-4. Duplicate `config/local.js.default` and rename it into `config/local.js`. Then edit and enter your database settings (DB name goes into `config/default.js`).
+4. Duplicate `config/dev.js.default` and rename it into `config/dev.js`. Then edit and enter your database settings (DB name goes into `config/default.js`).
 
 5. [Migrate the database and seed it](#database-migration-and-seed)
   ```
-  gulp db:migrate
-  gulp db:seed
+  npm run db:migrate
+  npm run db:seed
   ```
 
 6. Run the app
   ```
-  gulp
+  export NODE_ENV=dev    # only needed once per open terminal
+  npm start
   ```
-
-  (if `NODE_ENV` wasn't exported, then `local` is going to be used)
 
 7. Go to: [http://localhost:3000](http://localhost:3000)
 
@@ -82,28 +82,28 @@ Knex will keep a history of your executed migrations and save them into the DB t
 You have to save the migrations in `database/migrations/`. It's recommended to prefix the files with an incrementing number or timestamp. Otherwise it might be hard to keep track of the order the DB changes were executed.
 
 ```
-gulp db:migrate
+npm run db:migrate
 ```
 
 ### Rollback
 
 You can rollback the last group of executed migrations:
 ```
-gulp db:rollback
+npm run db:rollback
 ```
 
 ### Seeds
 
 You can populate your DB tables by executing seed files through Knex. Seed files are saved in `database/seeds/`.
 ```
-gulp db:seed
+npm run db:seed
 ```
 
 ## Tests
 
 This project has to kind of tests: UnitTest and API Tests. For both [Jasmine2] is being used. If you want to execute both kind of tests at the same time, you can run:
 ```
-gulp test
+npm test
 ```
 
 ### UnitTest's
@@ -112,7 +112,7 @@ UnitTest's are stored within the folders of the implementation and contain `.spe
 
 You can execute them by running:
 ```
-gulp test:unit
+npm run test:unit
 ```
 
 ### API Tests
@@ -122,12 +122,13 @@ API Tests are stored in `/tests/api` and are meant to test the RESTful end-point
 In order to test the server responses you have to start the server in a new terminal/tab:
 ```
 cd /path/to/your/project
-gulp
+export NODE_ENV=dev
+npm start
 ```
 
 Then execute your API Tests by running:
 ```
-gulp test:api
+npm run test:api
 ```
 
 ## API Documentation

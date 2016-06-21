@@ -1,7 +1,5 @@
-//
-// Internal dependencies
-//
 import { BaseController } from './base.controller'
+
 
 //
 // Tests
@@ -22,6 +20,12 @@ describe('Controller: Base', () => {
     expect(controller).not.toBe(undefined)
     expect(controller.Boom).not.toBe(undefined)
     expect(controller.notFoundMsg).toBe(notFoundMsg)
+  })
+
+  it('should have empty @notFoundMsg', () => {
+    let ctrl = new BaseController()
+
+    expect(ctrl.notFoundMsg).toBe('')
   })
 
   describe('replyOnResponse()', () => {
