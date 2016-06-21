@@ -21,7 +21,7 @@ xdescribe(`Routes: ToDo Lists`, () => {
     assertRoutes(routes.default, path, method, true)
   })
 
-  it('should expose GET /todo-lists/{id}/todos', () => {
+  xit('should expose GET /todo-lists/{id}/todos', () => {
     let path = '/todo-lists/{id}/todos'
       , method = 'GET'
 

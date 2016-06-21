@@ -10,7 +10,6 @@ xdescribe('Model: ToDoList', () => {
 
   beforeEach(() => {
     model = new ToDoList()
-    spyOn(model.ToDo, 'findBy').and.returnValue(Q.when({}))
   })
 
   it('should be defined and inherit from BaseModelRDMS', () => {
@@ -26,7 +25,11 @@ xdescribe('Model: ToDoList', () => {
     expect(model.ToDo).not.toBe(undefined)
   })
 
-  describe('findByIdWithToDos() method', () => {
+  xdescribe('findByIdWithToDos() method', () => {
+    beforeEach(() => {
+      spyOn(model.ToDo, 'findBy').and.returnValue(Q.when({}))
+    })
+
     it('should return a ToDoList and all its ToDos()', (done) => {
       spyOn(model, 'findById').and.returnValue(Q.when([{}]))
       let id = 1
